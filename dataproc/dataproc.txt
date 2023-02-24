@@ -1,0 +1,54 @@
+------------------Script to create cluster, initialization(can be changed), scopes is for all google api (Mayank had told you)------------------------------
+
+gcloud dataproc clusters create nvn-par-dataproc-bq \
+--image-version=1.5 \
+--bucket htgm-insights-data-dataproc-prd \
+--region us-central1 \
+--no-address \
+--subnet projects/insights-data-prod-01/regions/us-central1/subnetworks/htgm-custom-us-central1-subnet-vpc-prd1 \
+--master-machine-type e2-highmem-2 \
+--master-boot-disk-size 100GB \
+--master-boot-disk-type=pd-ssd \
+--num-workers 2 \
+--worker-machine-type e2-highmem-2 \
+--worker-boot-disk-size 100GB \
+--worker-boot-disk-type=pd-ssd \
+--scopes 'https://www.googleapis.com/auth/cloud-platform' \
+--project [project-id] \
+--initialization-actions=gs://insights-data-den-prd-fs/ez/code/westis/wisdb/txl/initialization.sh \
+--service-account=htgm-custom-service-acct@insights-data-prod-01.iam.gserviceaccount.com
+
+
+
+---------------------------------------------Script via youtube ----------------------------------------------------------------------------
+
+CLUSTER_NAME=nvn-dataproc-bq REGION=us-east1 
+gcloud dataproc clusters create ${CLUSTER_NAME} --region ${REGION} --single-node --master-machine-type n1-standard-2 --master-boot-disk-size 500 --image-version 2.0-debian10 --project mlconsole-poc --initialization-actions gs://goog-dataproc-initialization-actions-${REGION}/connectors/connectors.sh --metadata bigquery-connector-version=1.2.0 --metadata spark-bigquery-connector-version=0.21.0
+
+
+------------------------------- To Run Dataproc Job -----------------------------------------------------------------------------------
+
+gcloud dataproc jobs submit pyspark readfrombq.py --cluster=dataproc-demo1 --region=us-east1 --jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar
+
+----------------------------- To Start cluster using CLI --------------------------------------------------------------------------------
+
+CLUSTER_NAME=dataproc-demo1 REGION=us-east1
+gcloud dataproc clusters start ${CLUSTER_NAME} --region=${REGION}
+
+-------------------------To stop cluster using CLI ----------------------------------------------------------------------------------------
+
+
+CLUSTER_NAME=dataproc-demo1 REGION=us-east1
+gcloud dataproc clusters stop ${CLUSTER_NAME} --region=${REGION}
+
+------------------------------- Youtube link -----------------------------------------------------------------------------------------------
+
+https://youtu.be/InDXPeg6r5U
+
+--------------------------------gcp document--------------------------------------------------------------------------------------------
+
+https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark
+
+
+
+
