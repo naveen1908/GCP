@@ -21,7 +21,7 @@ words = spark.read.format('bigquery') \
   .load()
 words.createOrReplaceTempView('words')
 
-# Perform word count.
+# Perform Remove duplicate.
 remove_dupl = spark.sql(
     'SELECT DISTINCT * FROM nvn_dataset.annonymuspar')
 remove_dupl.show()
