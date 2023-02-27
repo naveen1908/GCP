@@ -28,7 +28,7 @@ gcloud dataproc clusters create ${CLUSTER_NAME} --region ${REGION} --single-node
 
 ------------------------------- To Run Dataproc Job -----------------------------------------------------------------------------------
 
-gcloud dataproc jobs submit pyspark readfrombq.py --cluster=dataproc-demo1 --region=us-east1 --jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar
+gcloud dataproc jobs submit pyspark bq_prqt_bq.py --cluster=nvn-dataproc-bq --region=us-east1 --jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar
 
 ----------------------------- To Start cluster using CLI --------------------------------------------------------------------------------
 
